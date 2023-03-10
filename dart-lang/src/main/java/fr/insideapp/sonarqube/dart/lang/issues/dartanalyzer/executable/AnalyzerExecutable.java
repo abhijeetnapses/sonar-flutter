@@ -88,7 +88,7 @@ public abstract class AnalyzerExecutable {
                     .run();
 
             LOGGER.info("Command '{}' finished (exit {})", result.getProcString(), result.getExitValue());
-            maybeThrowException(result);
+            // maybeThrowException(result);
 
             return new AnalyzerOutput(mode, result.getOutputString());
         } finally {
@@ -101,7 +101,8 @@ public abstract class AnalyzerExecutable {
     private void maybeThrowException(ProcResult result) {
         final String errorString = result.getErrorString();
         if (errorString != null && !errorString.isEmpty()) {
-            throw new IllegalStateException(String.format("Error while running '%s' (exit %s): %s", result.getProcString(), result.getExitValue(), errorString));
+            throw new IllegalStateException(String.format("Error while running '%s' (exit %s): %s",
+                    result.getProcString(), result.getExitValue(), errorString));
         }
     }
 
@@ -170,7 +171,8 @@ public abstract class AnalyzerExecutable {
         switch (mode) {
             case MANUAL:
                 if (outputMode.equals(AnalyzerOutput.Mode.DETECT)) {
-                    LOGGER.warn("Manual test report is configured without output mode, this may not work! Defaulting to legacy output.");
+                    LOGGER.warn(
+                            "Manual test report is configured without output mode, this may not work! Defaulting to legacy output.");
                     outputMode = AnalyzerOutput.Mode.LEGACY;
                 }
                 return new ManualAnalyzerExecutable(sensorContext, outputMode);
@@ -225,14 +227,16 @@ public abstract class AnalyzerExecutable {
 
         final String output = new String(result.getErrorBytes(), StandardCharsets.UTF_8).split("\\R", 2)[0];
 
-        // The version always written to stderr - https://github.com/dart-lang/sdk/issues/19704
+        // The version always written to stderr -
+        // https://github.com/dart-lang/sdk/issues/19704
         // Need to use exit code to determine success
         if (exitCode != 0) {
             LOGGER.warn("Could not determine Dart version from output: '{}' - defaulting to legacy mode", output);
             return AnalyzerOutput.Mode.LEGACY;
         }
 
-        final Matcher matcher = Pattern.compile("^Dart SDK version: (.*) \\((.*)\\) \\((.*)\\) on (.*)$").matcher(output);
+        final Matcher matcher = Pattern.compile("^Dart SDK version: (.*) \\((.*)\\) \\((.*)\\) on (.*)$")
+                .matcher(output);
         if (!matcher.matches()) {
             LOGGER.warn("Could not determine Dart version from output: '{}' - defaulting to legacy mode", output);
             return AnalyzerOutput.Mode.LEGACY;

@@ -475,17 +475,10 @@
       <repositoryKey>dartanalyzer</repositoryKey>
       <key>const_instance_field</key>
     </rule>
-    <rule>
-      <repositoryKey>dartanalyzer</repositoryKey>
-      <key>const_map_key_expression_type_implements_equals</key>
-    </rule>
+  
     <rule>
       <repositoryKey>dartanalyzer</repositoryKey>
       <key>const_not_initialized</key>
-    </rule>
-    <rule>
-      <repositoryKey>dartanalyzer</repositoryKey>
-      <key>const_set_element_type_implements_equals</key>
     </rule>
     <rule>
       <repositoryKey>dartanalyzer</repositoryKey>

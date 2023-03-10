@@ -488,6 +488,13 @@
         "description": "<p><strong>AVOID</strong> using a parameter name that is the same as an existing type.</p>\n<p><strong>BAD:</strong></p>\n<pre><code class=\"language-dart\">m(f(int));\n</code></pre>\n<p><strong>GOOD:</strong></p>\n<pre><code class=\"language-dart\">m(f(int v));\n</code></pre>\n\n@see https://dart-lang.github.io/linter/lints/avoid_types_as_parameter_names.html"
     },
     {
+        "key": "avoid_web_libraries_in_flutter (experimental)",
+        "name": "Avoid web libraries in flutter (experimental)",
+        "description": "Avoid using web-only libraries outside Flutter web plugin packages.",
+        "severity": "MAJOR",
+        "type": "BUG"
+    },
+    {
         "key": "avoid_types_on_closure_parameters",
         "name": "Avoid annotating types for function expression parameters.",
         "type": "CODE_SMELL",
@@ -944,23 +951,9 @@
         "description": "<p><em>Only static fields can be declared as const.</em></p>\n<h4>Description</h4>\n<p>The analyzer produces this diagnostic when an instance field is marked as\nbeing const.</p>\n<h4>Examples</h4>\n<p>The following code produces this diagnostic because <code>f</code> is an instance\nfield:</p>\n<p>{% prettify dart tag=pre+code %}\nclass C {\n[!const!] int f = 3;\n}\n{% endprettify %}</p>\n<h4>Common fixes</h4>\n<p>If the field needs to be an instance field, then remove the keyword\n<code>const</code>, or replace it with <code>final</code>:</p>\n<p>{% prettify dart tag=pre+code %}\nclass C {\nfinal int f = 3;\n}\n{% endprettify %}</p>\n<p>If the field really should be a const field, then make it a static field:</p>\n<p>{% prettify dart tag=pre+code %}\nclass C {\nstatic const int f = 3;\n}\n{% endprettify %}</p>\n\n@see https://dart.dev/tools/diagnostic-messages#const_instance_field"
     },
     {
-        "key": "prefer_final_fields",
-        "name": "Prefer final fields",
-        "description": "Private field could be final.",
-        "severity": "MINOR",
-        "type": "CODE_SMELL"
-    },
-    {
-        "key": "prefer_final_in_for_each",
-        "name": "Prefer final in for each",
-        "description": "Prefer final in for-each loop variable if reference is not reassigned.",
-        "severity": "MINOR",
-        "type": "CODE_SMELL"
-    },
-    {
-        "key": "prefer_final_locals",
-        "name": "Prefer final locals",
-        "description": "Prefer final for variable declarations if they are not reassigned.",
+        "key": "const_not_initialized",
+        "name": "Const not initialized",
+        "description": "The analyzer produces this diagnostic when a variable that is declared to\nbe a constant doesn\u2019t have an initializer.\n @see https://dart.dev/tools/diagnostic-messages#const_not_initialized",
         "severity": "MINOR",
         "type": "CODE_SMELL"
     },
@@ -1723,6 +1716,13 @@
         "status": "READY",
         "severity": "CRITICAL",
         "description": "<p><strong>DO</strong> override <code>hashCode</code> if overriding <code>==</code> and prefer overriding <code>==</code> if\noverriding <code>hashCode</code>.</p>\n<p>Every object in Dart has a <code>hashCode</code>.  Both the <code>==</code> operator and the\n<code>hashCode</code> property of objects must be consistent in order for a common hash\nmap implementation to function properly.  Thus, when overriding <code>==</code>, the\n<code>hashCode</code> should also be overridden to maintain consistency. Similarly, if\n<code>hashCode</code> is overridden, <code>==</code> should be also.</p>\n<p><strong>BAD:</strong></p>\n<pre><code class=\"language-dart\">class Bad {\n  final int value;\n  Bad(this.value);\n\n  @override\n  bool operator ==(Object other) =&gt; other is Bad &amp;&amp; other.value == value;\n}\n</code></pre>\n<p><strong>GOOD:</strong></p>\n<pre><code class=\"language-dart\">class Better {\n  final int value;\n  Better(this.value);\n\n  @override\n  bool operator ==(Object other) =&gt; other is Better &amp;&amp; other.value == value;\n\n  @override\n  int get hashCode =&gt; value.hashCode;\n}\n</code></pre>\n\n@see https://dart-lang.github.io/linter/lints/hash_and_equals.html"
+    },
+    {
+        "key": "invariant_booleans (experimental)",
+        "name": "Invariant booleans (experimental)",
+        "description": "Conditions should not unconditionally evaluate to true or to false.",
+        "severity": "CRITICAL",
+        "type": "BUG"
     },
     {
         "key": "if_element_condition_from_deferred_library",
@@ -5212,4 +5212,5 @@
         "severity": "MAJOR",
         "description": "<p><em>The type '{0}' implied by the 'yield' expression must be assignable to '{1}'.</em></p>\n<h4>Description</h4>\n<p>The analyzer produces this diagnostic when the type of object produced by a\n<code>yield</code> expression doesn't match the type of objects that are to be\nreturned from the <code>Iterable</code> or <code>Stream</code> types that are returned from a\ngenerator (a function or method marked with either <code>sync*</code> or <code>async*</code>).</p>\n<h4>Example</h4>\n<p>The following code produces this diagnostic because the getter <code>zero</code> is\ndeclared to return an <code>Iterable</code> that returns integers, but the <code>yield</code> is\nreturning a string from the iterable:</p>\n<p>{% prettify dart tag=pre+code %}\nIterable<int> get zero sync* {\nyield [!'0'!];\n}\n{% endprettify %}</p>\n<h4>Common fixes</h4>\n<p>If the return type of the function is correct, then fix the expression\nfollowing the keyword <code>yield</code> to return the correct type:</p>\n<p>{% prettify dart tag=pre+code %}\nIterable<int> get zero sync* {\nyield 0;\n}\n{% endprettify %}</p>\n<p>If the expression following the <code>yield</code> is correct, then change the return\ntype of the function to allow it:</p>\n<p>{% prettify dart tag=pre+code %}\nIterable<String> get zero sync* {\nyield '0';\n}\n{% endprettify %}</p>\n\n@see https://dart.dev/tools/diagnostic-messages#yield_of_invalid_type"
     }
+
 ]

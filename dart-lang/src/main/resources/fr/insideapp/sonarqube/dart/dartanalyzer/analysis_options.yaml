@@ -118,9 +118,7 @@ linter:
     - const_initialized_with_non_constant_value
     - const_initialized_with_non_constant_value_from_deferred_library
     - const_instance_field
-    - const_map_key_expression_type_implements_equals
     - const_not_initialized
-    - const_set_element_type_implements_equals
     - const_spread_expected_list_or_set
     - const_spread_expected_map
     - const_with_non_const
