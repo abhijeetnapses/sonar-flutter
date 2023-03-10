@@ -35,7 +35,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-
 public class DartAnalyzerRulesDefinition implements RulesDefinition {
     private static final Logger LOGGER = LoggerFactory.getLogger(DartAnalyzerRulesDefinition.class);
     public static final String REPOSITORY_KEY = "dartanalyzer";
@@ -52,9 +51,10 @@ public class DartAnalyzerRulesDefinition implements RulesDefinition {
     public void define(Context context) {
         NewRepository repository = context.createRepository(REPOSITORY_KEY, Dart.KEY).setName(REPOSITORY_NAME);
 
-        try(Reader reader = new InputStreamReader(getClass().getResourceAsStream(RULES_FILE), Charset.forName("UTF-8"))){
+        try (Reader reader = new InputStreamReader(getClass().getResourceAsStream(RULES_FILE),
+                Charset.forName("UTF-8"))) {
             JSONArray slRules = (JSONArray) JSONValue.parse(reader);
-            if(slRules != null){
+            if (slRules != null) {
                 for (Object obj : slRules) {
                     JSONObject slRule = (JSONObject) obj;
                     repository.createRule((String) slRule.get("key"))
